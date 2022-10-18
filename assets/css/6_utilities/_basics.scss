@@ -1,0 +1,20 @@
+@each $font-size, $size in $font-size-map {
+  .#{$font-size} {
+    font-size: $size;
+  }
+}
+
+@each $font-weight, $weight in $font-weight-map {
+  .bold-#{$font-weight} {
+    font-weight: $weight;
+  }
+}
+
+@each $color-name, $color in $palette-map {
+  .color-#{$color-name} {
+    color: $color;
+  }
+  .background-#{$color-name} {
+    background-color: $color;
+  }
+}

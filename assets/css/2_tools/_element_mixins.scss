@@ -1,0 +1,38 @@
+@mixin rich-text {
+  img:not([class]) {
+    max-width: 100%;
+    height: auto;
+  }
+  ul {
+    width: 100%;
+    list-style: disc inside none;
+    padding: 10px 30px;
+  }
+  p {
+    width: 100%;
+    text-align: justify;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    width: 100%;
+  }
+  a:not([class]) {
+    color: $palette-aquamarine;
+  }
+  code {
+    width: 100%;
+    text-align: left;
+    display: block;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  td {
+    vertical-align: middle;
+  }
+}

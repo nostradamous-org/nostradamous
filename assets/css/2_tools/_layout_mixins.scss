@@ -1,0 +1,154 @@
+//media query mixins
+// xs:    small phone:               <360
+// s:     phone:                     < 600
+// m:     tablet portrait:           600 < 900
+// l:     tablet landscape:          900 < 1200
+// l-xl:  small desktop landscape:   1200 < 1500
+// xl:    desktop:                   1500 < 1800
+// xxl:   wide screen:               1800 <
+@mixin at-e-m {
+  @media only screen and (min-width: $vp_mobile_upper + 1) and (max-width: $vp_tabletp_upper - 1) {
+    @content;
+  }
+}
+
+@mixin at-e-l {
+  @media only screen and (min-width: $vp_tabletp_upper) and (max-width: $vp_tabletl_upper - 1) {
+    @content;
+  }
+}
+
+@mixin at-e-l-xl {
+  @media only screen and (min-width: $vp_tabletl_upper) and (max-width: $vp_tabletl-wide_upper - 1) {
+    @content;
+  }
+}
+
+@mixin at-e-xl {
+  @media only screen and (min-width: $vp_tabletl-wide_upper) and (max-width: $vp_wide_lower - 1) {
+    @content;
+  }
+}
+
+@mixin at-gte-m {
+  @media only screen and (min-width: $vp_mobile_upper) {
+    @content;
+  }
+}
+
+@mixin at-gte-l {
+  @media only screen and (min-width: $vp_tabletp_upper) {
+    @content;
+  }
+}
+
+@mixin at-gte-l-xl {
+  @media only screen and (min-width: $vp_tabletl_upper) {
+    @content;
+  }
+}
+
+@mixin at-gte-xl {
+  @media only screen and (min-width: $vp_tabletl-wide_upper) {
+    @content;
+  }
+}
+
+@mixin at-e-xxl {
+  @media only screen and (min-width: $vp_wide_lower) {
+    @content;
+  }
+}
+
+@mixin at-e-xs {
+  @media only screen and (max-width: $vp_small_mobile_upper) {
+    @content;
+  }
+}
+
+@mixin at-e-s {
+  @media only screen and (max-width: $vp_mobile_upper) {
+    @content;
+  }
+}
+
+@mixin at-lte-m {
+  @media only screen and (max-width: $vp_tabletp_upper) {
+    @content;
+  }
+}
+
+@mixin at-lte-l {
+  @media only screen and (max-width: $vp_tabletl_upper) {
+    @content;
+  }
+}
+
+@mixin at-lte-l-xl {
+  @media only screen and (max-width: $vp_tabletl-wide_upper) {
+    @content;
+  }
+}
+
+@mixin at-lte-xl {
+  @media only screen and (max-width: $vp_wide_lower) {
+    @content;
+  }
+}
+
+$padding: 24px;
+// helper mixins for grids
+@mixin flex-col {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+@mixin col-spec($i) {
+  @include flex-col;
+  width: calc(#{$i}/ 12 * 100%);
+}
+
+@mixin row {
+  @include flex-col;
+  width: 100%;
+  justify-content: space-between;
+  max-width: $vp_wide_upper;
+  margin: 0 auto;
+}
+
+@mixin row--nowrap {
+  @include row;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+@mixin row--full {
+  @include row;
+  max-width: none;
+}
+
+@mixin filler {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+@mixin filler--padded {
+  @include filler;
+  padding: 15px
+}
+
+@mixin filler--nowrap {
+  @include filler;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+@mixin grid-spec($i) {
+  display: grid;
+  grid-template-columns: repeat(#{$i}, 1fr);
+  gap: 20px;
+  grid-auto-rows: minmax(25px, auto);
+}

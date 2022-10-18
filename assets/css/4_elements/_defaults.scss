@@ -1,0 +1,128 @@
+html {
+  font-family: 'Segoe UI';
+  font-size: 80%;
+  scroll-behavior: smooth;
+  line-height: 1.8; //https://stackoverflow.com/a/15135142/5332953
+  background-color: $palette-nero;
+  padding: 24px 165px;
+}
+
+.desktop-viewport {
+  min-width: $vp_tabletp_upper;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+h1 {
+  font-size: $fl1;
+}
+
+h2 {
+  font-size: $f0;
+}
+
+h3 {
+  font-size: $fs1;
+}
+
+h4 {
+  font-size: $fs2;
+}
+
+h5 {
+  font-size: $fs2;
+}
+
+h6 {
+  font-size: $fs2;
+}
+
+a {
+  text-decoration: none;
+  font-size: inherit;
+  color: inherit;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #cccccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+button,
+input[type='submit'],
+input[type='button'] {
+  box-shadow: none;
+  outline: none;
+}
+
+/* blue background on click */
+
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+textarea {
+  border: 1px solid $palette-snow;
+  padding: 5px;
+}
+
+@include placeholder(input) {
+  font-family: 'Segoe UI';
+}
+
+input[type='email'],
+input[type='password'],
+input[type='number'] {
+  text-align: left;
+  font-family: 'Segoe UI';
+}
+
+input[readonly] {
+  color: $palette-sova-grey;
+  cursor: not-allowed;
+}
+
+input[type='password'] {
+  @at-root {
+    @include placeholder(&) {
+      text-align: right;
+      font-family: 'Segoe UI';
+    }
+  }
+}
+
+input[type='number'] {
+  @at-root {
+    @include placeholder(&) {
+      text-align: left;
+      font-family: 'Segoe UI';
+    }
+  }
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px $palette-snow inset;
+}
+
+::-webkit-input-placeholder {
+  color: #aaa;
+}
+
+:-moz-placeholder {
+  color: #aaa;
+}

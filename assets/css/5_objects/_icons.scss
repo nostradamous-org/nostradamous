@@ -1,0 +1,31 @@
+$size-list: 6 8 10 12 16 20 24 28 32 36 48 64 96;
+.svg-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  *:not(.stroke-when-active) {
+    stroke: transparent;
+  }
+  *.fill-when-active {
+    fill: transparent;
+  }
+  &.is-active {
+    *.stroke-when-active {
+      stroke: $palette-aquamarine;
+    }
+  }
+  @each $size in $size-list {
+    @include --modifier($size) {
+      height: #{calc($size/16)}em;
+      width: #{calc($size/16)}em;
+    }
+  }
+  //loop to produce all color variations
+  @each $color-name, $color in $palette-map {
+    @include --modifier('#{$color-name}') {
+      *:not(.stroke-when-active) {
+        stroke: $color;
+      }
+    }
+  }
+}

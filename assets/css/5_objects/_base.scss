@@ -1,0 +1,253 @@
+.base-input {
+  display: flex;
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 8px 10px;
+  width: 100%;
+  text-align: left;
+  position: relative;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid $palette-snow;
+  resize: none;
+  &::placeholder {
+    color: $palette-sova-grey;
+  }
+  &:focus {
+    border-color: $palette-aquamarine;
+  }
+  &:after {
+    content: '';
+    position: relative;
+    top: 1px;
+    border: 8px solid transparent;
+    border-top: 9px solid $palette-nero;
+    border-bottom: 0 none;
+  }
+  @include --modifier(clicked) {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    &:after {
+      border-bottom: 9px solid $palette-nero;
+      border-top: 0 none;
+    }
+  }
+  @include --modifier(error) {
+    border-color: red;
+  }
+  @include --modifier('disabled') {
+    background-color: $palette-snow;
+    border: 1px solid $palette-snow;
+    color: $palette-sova-grey;
+    cursor: not-allowed;
+  }
+  @include --modifier(with-icon) {
+    padding-right: 55px;
+  }
+  @include __element('icon') {
+    position: absolute;
+    z-index: 10;
+    top: 12px;
+    bottom: 15px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.base-checkbox {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  position: relative;
+  top: 2px;
+  cursor: pointer;
+  border-color: $palette-sova-grey;
+  -webkit-appearance: none;
+  @include --modifier(radio) {
+    border-radius: 16px;
+    border-color: $palette-sova-grey;
+  }
+  &::before {
+    content: '';
+    width: 15px;
+    height: 15px;
+    border-radius: 4px;
+    border: 1px solid $palette-snow;
+    background-color: $palette-snow;
+    display: block;
+    position: relative;
+    bottom: 3px;
+  }
+  &:checked::before {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    background-color: $palette-sova-grey;
+    border-color: $palette-sova-grey;
+  }
+  &:checked::after {
+    content: '\2713';
+    display: block;
+    position: relative;
+    right: -4px;
+    bottom: 22px;
+    font-size: $fl1;
+    font-weight: 700;
+    border-radius: 4px;
+    color: $palette-white;
+  }
+  @include --modifier(radio) {
+    &::before {
+      border: 1px solid $palette-snow;
+      background-color: $palette-white;
+      border-radius: 16px;
+    }
+    &:checked::before {
+      background-color: $palette-white;
+      border: 1px solid $palette-snow;
+      border-radius: 16px;
+    }
+    &:checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 16px;
+      right: -4px;
+      bottom: 17px;
+      background-color: $palette-sova-grey;
+    }
+  }
+  @include __element('label') {
+    color: $palette-nero;
+    font-size: $f0;
+    font-weight: 400;
+    margin-left: 10px;
+  }
+}
+
+.base-select-option {
+  display: flex;
+  align-items: center;
+  cursor: default;
+  @include __element('label') {
+    width: max-content;
+  }
+  @include __element(input) {
+    display: flex;
+    border: 1px solid $palette-snow;
+    box-sizing: border-box;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-weight: 300;
+    width: 100%;
+    position: relative;
+    justify-content: space-between;
+    background-color: $palette-white;
+    align-items: center;
+    &:focus {
+      border-color: $palette-aquamarine;
+    }
+    // @include --modifier(clicked) {
+    //   border-bottom-left-radius: 0;
+    //   border-bottom-right-radius: 0;
+    //   &:after {
+    //     border-bottom: 9px solid $palette-nero;
+    //     border-top: 0 none;
+    //   }
+    // }
+    @include --modifier('disabled') {
+      background-color: $palette-snow;
+      border: 1px solid $palette-snow;
+      color: $palette-sova-grey;
+      cursor: not-allowed;
+    }
+  }
+  @include __element(options) {
+    position: absolute;
+    right: -1px;
+    left: -1px;
+    top: 35px;
+    background: $palette-white;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    z-index: 100;
+    max-height: 300px;
+    overflow-y: auto;
+    box-shadow: 0px 10px 20px -5px rgba(36, 35, 98, 0.2);
+  }
+  @include __element(option) {
+    @include ellipsis;
+    padding: 8px 10px;
+    display: flex;
+    font-weight: 300;
+    width: 100%;
+    align-items: center;
+    color: $palette-nero;
+    cursor: pointer;
+    &:hover {
+      background-color: $palette-whisper;
+    }
+    &:last-child {
+      padding-bottom: 10px;
+    }
+    @include --modifier('active') {
+      background-color: $palette-whisper;
+    }
+  }
+  @include __element(img) {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.base-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  @include --modifier(dimension) {
+    width: 30px;
+    height: 30px;
+  }
+  @include --modifier('disabled') {
+    cursor: not-allowed;
+  }
+}
+
+.base-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  height: 100%;
+  z-index: 9999;
+  @include __element('box') {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    z-index: 101;
+    background-color: $palette-white;
+    box-shadow: 0px 20px 30px -5px rgba(36, 35, 98, 0.1);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 800px;
+    padding: 20px 50px;
+    @include --modifier('smaller') {
+      max-width: 500px;
+    }
+    @include --modifier(dynamic) {
+      max-width: calc(100% - 200px);
+    }
+  }
+  @include __element(close) {
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+  }
+}

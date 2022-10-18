@@ -1,0 +1,194 @@
+// box model and positioning
+.ellipsis {
+  @include ellipsis;
+}
+
+.ellipsis--v-center {
+  @include ellipsis--v-center();
+}
+
+.flex-wrapper {
+  display: inline-flex;
+}
+
+.flex {
+  display: flex;
+}
+
+.column-flex {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-1 {
+  display: flex;
+  flex: 1;
+}
+
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.right-aligned {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.flex-start-align {
+  display: flex;
+  align-items: flex-start;
+}
+
+.flex-end-align {
+  display: flex;
+  align-items: flex-end;
+}
+
+.center-aligned {
+  justify-content: center;
+  text-align: center;
+}
+
+.center-items {
+  align-items: center;
+}
+
+.left-aligned {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.space-around {
+  justify-content: space-around;
+}
+
+.space-evenly {
+  justify-content: space-evenly;
+}
+
+.white-space-nowrap {
+  white-space: nowrap;
+}
+
+.relative {
+  position: relative;
+}
+
+.z-indexed {
+  position: relative;
+  z-index: 10;
+}
+
+.high-z-indexed {
+  z-index: 9999;
+}
+
+.max-content-width {
+  width: max-content;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.hidden {
+  display: none;
+}
+
+.invisible-items {
+  visibility: hidden;
+}
+
+.side-padding {
+  padding: 0 $padding;
+}
+
+.left-padding {
+  padding-left: $padding;
+}
+
+.side-margin {
+  margin: 0 $padding;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.right-margin {
+  margin-right: $padding;
+}
+
+.left-margin {
+  margin-left: $padding;
+}
+
+.bottom-margin {
+  margin-bottom: $padding;
+}
+
+.top-margin {
+  margin-top: $padding;
+}
+
+.side-half-margin {
+  margin: 0 calc($padding/3);
+}
+
+.bottom-half-margin {
+  margin-bottom: calc($padding/3);
+}
+
+.top-half-margin {
+  margin-top: calc($padding/3);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
+.justify {
+  text-align: justify;
+}
+
+.rich-text {
+  @include rich-text;
+}
+
+.is-rotated-90 {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.is-rotated-180 {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.box-shadow {
+  box-shadow: 0px 5px 12px rgba(21, 0, 107, 0.25);
+}

@@ -1,20 +1,32 @@
 {
   "name": "nostradamous",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
   },
   "dependencies": {
-    "next": "12.3.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "@axelar-network/axelar-local-dev": "github:axelarnetwork/axelar-local-dev",
+    "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/proxy": "^2.1.0",
+    "core-js": "^3.6.5",
+    "nuxt": "^2.14.6",
+    "nuxt-breakpoints": "^1.1.9",
+    "nuxt-lazy-load": "^1.2.7",
+    "vue-loading-overlay": "^3.4.2",
+    "vue-toastification": "^1.7.14",
+    "web3": "^1.8.0"
   },
   "devDependencies": {
-    "eslint": "8.24.0",
-    "eslint-config-next": "12.3.1"
+    "@nuxtjs/router-extras": "^1.1.1",
+    "@nuxtjs/svg": "^0.1.12",
+    "prettier": "^2.1.2",
+    "sass": "^1.23.0",
+    "sass-loader": "^10.1.0",
+    "vue-svg-loader": "^0.16.0",
+    "webpack": "^4.30.0"
   }
 }

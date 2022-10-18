@@ -1,0 +1,94 @@
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.2s;
+}
+
+.page-enter,
+.page-leave-active {
+  opacity: 0;
+}
+
+.vertical-enter-active,
+.vertical-leave-active {
+  transition: max-height 0.4s ease-in-out;
+}
+.vertical-enter-to,
+.vertical-leave {
+  max-height: 300px;
+  overflow: hidden;
+}
+.vertical-enter,
+.vertical-leave-to {
+  max-height: 0;
+  overflow: hidden;
+}
+
+.horizental-enter-active,
+.horizental-leave-active {
+  transition: max-width 0.5s ease-in-out;
+}
+
+.horizental-enter-to,
+.horizental-leave {
+  max-width: 350px;
+  overflow: hidden;
+}
+
+.horizental-enter,
+.horizental-leave-to {
+  max-width: 0;
+  overflow: hidden;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.fade-enter-to,
+.fade-leave {
+  opacity: 0.8;
+  overflow: hidden;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+  overflow: hidden;
+}
+
+.to-left-enter-active,
+.to-left-leave-active {
+  transition: right 0.4s ease-in;
+}
+
+.to-left-enter-to,
+.to-left-leave {
+  right: 0;
+  overflow: hidden;
+}
+
+.to-left-enter,
+.to-left-leave-to {
+  right: -100%;
+  overflow: hidden;
+}
+
+.to-bottom-enter-active,
+.to-bottom-leave-active {
+  transition: bottom 0.4s ease-in;
+}
+
+.to-bottom-enter-to,
+.to-bottom-leave {
+  top: unset;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.to-bottom-enter,
+.to-bottom-leave-to {
+  top: unset;
+  bottom: -100%;
+  overflow: hidden;
+}

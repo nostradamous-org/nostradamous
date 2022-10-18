@@ -1,0 +1,63 @@
+.container {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  margin: 0 auto;
+  justify-content: space-between;
+  width: 100%;
+  color: $palette-nero;
+}
+
+.toast {
+  @include __element(body) {
+    font-family: 'Segoe UI' !important;
+    font-size: 14px !important;
+  }
+}
+
+.Vue-Toastification {
+  @include __element(toast) {
+    color: $palette-white;
+    border-radius: 8px !important;
+    @include at-e-s {
+      width: 100% !important;
+      top: 50px !important;
+      max-width: 300px !important;
+      min-width: 300px !important;
+    }
+    @include at-e-m {
+      width: 80% !important;
+      top: 50px !important;
+    }
+    &.top-right {
+      margin-left: auto !important;
+      margin-right: 20px !important;
+    }
+    @include --modifier(success) {
+      background-color: $palette-aquamarine !important;
+    }
+    @include --modifier(info) {
+      background-color: #ffb800 !important;
+    }
+    @include --modifier(error) {
+      background-color: #ff5c00 !important;
+    }
+  }
+  @include __element('icon') {
+    margin-left: 10px !important;
+  }
+}
+
+.shadow {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: $palette-nero;
+  top: 0;
+  left: 0;
+  opacity: 0.3;
+  z-index: -10;
+}
+
+.header {
+}

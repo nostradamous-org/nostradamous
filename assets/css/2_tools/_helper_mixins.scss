@@ -1,0 +1,26 @@
+// BEM helpers
+@mixin --modifier($modifier) {
+  $parent: &;
+  &--#{$modifier} {
+    @extend #{$parent};
+    @content;
+  }
+}
+@mixin --state-modifier($modifier) {
+  &--#{$modifier} {
+    @content;
+  }
+}
+// for special cases only
+@mixin single-modifier($modifier) {
+  $parent: &;
+  &-#{$modifier} {
+    @extend #{$parent};
+    @content;
+  }
+}
+@mixin __element($element) {
+  &__#{$element} {
+    @content;
+  }
+}

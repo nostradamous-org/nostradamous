@@ -1,0 +1,43 @@
+//base grid classes
+
+.row {
+  @include row;
+}
+
+.row--nowrap {
+  @include row--nowrap;
+}
+
+.row--full {
+  @include row--full;
+}
+
+.filler {
+  @include filler;
+}
+
+.filler--padded {
+  @include filler--padded;
+}
+
+.filler--nowrap {
+  @include filler--nowrap;
+}
+
+@for $i from 1 through 12 {
+  .grid-#{$i} {
+    @include grid-spec($i);
+  }
+}
+
+@for $i from 1 through 12 {
+  .grid-column-#{$i} {
+    grid-column: $i;
+  }
+}
+
+@for $i from 1 through 12 {
+  .grid-row-#{$i} {
+    grid-row: $i;
+  }
+}

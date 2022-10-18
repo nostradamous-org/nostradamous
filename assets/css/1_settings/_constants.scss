@@ -1,0 +1,20 @@
+// comment to allow modifier extension for empty rule set: ! for compression!
+
+/*! comment  */
+
+$imgURL: '/static/images/';
+$fontURL: '/static/fonts/';
+$vp_small_mobile_upper: 360px;
+$vp_mobile_upper: 600px;
+$vp_tabletp_upper: 900px;
+$vp_tabletl_upper: 1200px;
+$vp_tabletl-wide_upper: 1500px;
+$vp_wide_lower: 1800px;
+$vp_wide_upper: 2100px;
+$font_base: 14;
+$fs2: calc(10em / $font_base);
+$fs1: calc(12em / $font_base);
+$f0: calc(14em / $font_base);
+$fl1: calc(16em / $font_base);
+$fl2: calc(20em / $font_base);
+$fl3: calc(24em / $font_base);
