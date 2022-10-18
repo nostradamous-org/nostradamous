@@ -56,4 +56,13 @@ const chainsId = [
   },
 ]
 
-export { chainsId }
+const stableCoins = [
+  {
+    name: 'USDC',
+    token: 'USDC',
+    id: 'USDC',
+    icon: 'tokens/usdc',
+  },
+]
+
+export { chainsId, stableCoins }

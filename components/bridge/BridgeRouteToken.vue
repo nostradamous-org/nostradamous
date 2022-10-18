@@ -10,11 +10,22 @@
 
 <script>
 import { chainsId } from '~/assets/js/constants'
+import { isObjectEmpty } from '~/assets/js/utils'
 export default {
   props: {
     flow: {
       type: String,
       required: true,
+    },
+    token: {
+      type: Object,
+      required: true,
+    },
+    fromToken: {
+      type: Object,
+      default: function () {
+        return {}
+      },
     },
   },
   data() {
@@ -26,6 +37,31 @@ export default {
       },
       tokens: chainsId,
     }
+  },
+  watch: {
+    option: {
+      handler() {
+        this.$emit('token-value', this.option, this.flow)
+      },
+      deep: true,
+    },
+    token: {
+      handler() {
+        this.option = this.token
+      },
+      deep: true,
+    },
+    fromToken: {
+      handler() {
+        if (!isObjectEmpty(this.fromToken)) {
+          this.tokens = chainsId.filter((x) => x.id !== this.fromToken.id)
+          if (this.option.id === this.fromToken.id) {
+            this.option = this.tokens[0]
+          }
+        }
+      },
+      deep: true,
+    },
   },
 }
 </script>

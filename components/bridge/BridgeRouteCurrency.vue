@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { stableCoins } from '~/assets/js/constants'
 import { mapGetters } from 'vuex'
 export default {
   props: {
@@ -48,15 +49,9 @@ export default {
       option: {
         id: '',
         name: '',
-        image: '',
+        icon: '',
       },
-      currencies: [
-        {
-          id: 'USDT',
-          name: 'USDT',
-          image: 'tokens/btc.png',
-        },
-      ],
+      currencies: stableCoins,
     }
   },
   watch: {

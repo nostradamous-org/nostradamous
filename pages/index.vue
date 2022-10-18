@@ -1,5 +1,5 @@
 <template>
-  <div class="flex full-width">
+  <div class="flex full-width top-margin">
     <bridge-route></bridge-route>
     <bridge-details></bridge-details>
   </div>
