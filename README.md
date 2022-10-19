@@ -10,19 +10,22 @@ Users only need to select the chain on which their asset is located and enter th
 
 # Build Instructions
 
-##### Install dependencies
+#### Set up deployer key
+``` cp .env.example .env ```
+
+#### Install dependencies
 ``` npm install or yarn ```
 
-##### launch local cross-chain development
+#### launch local cross-chain development
 ``` npm run local-dev:start or  yarn local-dev:start ```
 
-##### Compile contracts with hardhat
+#### Compile contracts with hardhat
 ``` npm run contracts:build or yarn contracts:build ```
 
-##### deploy contracts
+#### deploy contracts
 ``` npm run contracts:deploy or yarn contracts:deploy ```
 
-##### Launch the project
+#### Launch the project
 ``` npm run dev or yarn dev ```
 
 
