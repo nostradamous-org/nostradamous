@@ -92,7 +92,6 @@ sw.*
 
 # contract files
 artifacts
-local.json
 cache
 
 tsconfig.tsbuildinfo
