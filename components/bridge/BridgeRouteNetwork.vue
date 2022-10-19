@@ -1,8 +1,9 @@
 <template>
   <base-select-option
     class="column-flex flex-start-align flex-1"
+    input-main-class="bridge__network"
     :label="flow"
-    :options="tokens"
+    :options="networks"
     :active-option.sync="option"
   >
   </base-select-option>
@@ -17,11 +18,11 @@ export default {
       type: String,
       required: true,
     },
-    token: {
+    network: {
       type: Object,
       required: true,
     },
-    fromToken: {
+    fromNetwork: {
       type: Object,
       default: function () {
         return {}
@@ -35,28 +36,28 @@ export default {
         name: '',
         icon: '',
       },
-      tokens: chainsId,
+      networks: chainsId,
     }
   },
   watch: {
     option: {
       handler() {
-        this.$emit('token-value', this.option, this.flow)
+        this.$emit('network-value', this.option, this.flow)
       },
       deep: true,
     },
-    token: {
+    network: {
       handler() {
-        this.option = this.token
+        this.option = this.network
       },
       deep: true,
     },
-    fromToken: {
+    fromNetwork: {
       handler() {
-        if (!isObjectEmpty(this.fromToken)) {
-          this.tokens = chainsId.filter((x) => x.id !== this.fromToken.id)
-          if (this.option.id === this.fromToken.id) {
-            this.option = this.tokens[0]
+        if (!isObjectEmpty(this.fromNetwork)) {
+          this.networks = chainsId.filter((x) => x.id !== this.fromNetwork.id)
+          if (this.option.id === this.fromNetwork.id) {
+            this.option = this.networks[0]
           }
         }
       },

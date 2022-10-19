@@ -16,6 +16,10 @@
   &:focus {
     border-color: $palette-aquamarine;
   }
+  &:disabled {
+    background-color: #ededed;
+    border-color: #ededed;
+  }
   &:after {
     content: '';
     position: relative;
@@ -148,14 +152,14 @@
     &:focus {
       border-color: $palette-aquamarine;
     }
-    // @include --modifier(clicked) {
-    //   border-bottom-left-radius: 0;
-    //   border-bottom-right-radius: 0;
-    //   &:after {
-    //     border-bottom: 9px solid $palette-nero;
-    //     border-top: 0 none;
-    //   }
-    // }
+    @include --modifier(clicked) {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      &:after {
+        border-bottom: 9px solid $palette-nero;
+        border-top: 0 none;
+      }
+    }
     @include --modifier('disabled') {
       background-color: $palette-snow;
       border: 1px solid $palette-snow;
@@ -167,7 +171,7 @@
     position: absolute;
     right: -1px;
     left: -1px;
-    top: 35px;
+    top: 37px;
     background: $palette-white;
     box-sizing: border-box;
     border-radius: 8px;

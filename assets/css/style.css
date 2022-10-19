@@ -1125,6 +1125,10 @@ input:-webkit-autofill {
 .base-input:focus, .base-input--with-icon:focus, .base-input--disabled:focus, .base-input--error:focus, .base-input--clicked:focus {
   border-color: #4ef09d;
 }
+.base-input:disabled, .base-input--with-icon:disabled, .base-input--disabled:disabled, .base-input--error:disabled, .base-input--clicked:disabled {
+  background-color: #ededed;
+  border-color: #ededed;
+}
 .base-input:after, .base-input--with-icon:after, .base-input--disabled:after, .base-input--error:after, .base-input--clicked:after {
   content: "";
   position: relative;
@@ -1242,7 +1246,7 @@ input:-webkit-autofill {
   width: -moz-max-content;
   width: max-content;
 }
-.base-select-option__input, .base-select-option__input--disabled {
+.base-select-option__input, .base-select-option__input--disabled, .base-select-option__input--clicked {
   display: flex;
   border: 1px solid #fcfcfc;
   box-sizing: border-box;
@@ -1255,8 +1259,16 @@ input:-webkit-autofill {
   background-color: #ffffff;
   align-items: center;
 }
-.base-select-option__input:focus, .base-select-option__input--disabled:focus {
+.base-select-option__input:focus, .base-select-option__input--disabled:focus, .base-select-option__input--clicked:focus {
   border-color: #4ef09d;
+}
+.base-select-option__input--clicked {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.base-select-option__input--clicked:after {
+  border-bottom: 9px solid #1a1a1a;
+  border-top: 0 none;
 }
 .base-select-option__input--disabled {
   background-color: #fcfcfc;
@@ -1268,7 +1280,7 @@ input:-webkit-autofill {
   position: absolute;
   right: -1px;
   left: -1px;
-  top: 35px;
+  top: 37px;
   background: #ffffff;
   box-sizing: border-box;
   border-radius: 8px;
@@ -1864,7 +1876,10 @@ input:-webkit-autofill {
   border-radius: 16px;
   padding: 25px;
   background-color: #d8d8d8;
-  width: 445px;
+  width: 500px;
+}
+.bridge__network {
+  height: 45px;
 }
 .bridge__converter-icon {
   position: relative;
@@ -1873,10 +1888,18 @@ input:-webkit-autofill {
 .bridge__currency-input {
   margin-right: 8px;
 }
+.bridge__currency-option {
+  width: 100px;
+}
 .bridge__currency-max {
   position: absolute;
   right: 15px;
   z-index: 10;
   background-color: transparent !important;
   padding: 0;
+}
+.bridge__details {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 8px 10px;
 }/*# sourceMappingURL=style.css.map */

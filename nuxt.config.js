@@ -32,13 +32,18 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
-  buildModules: ['@nuxtjs/svg', '@nuxtjs/router-extras'],
+  buildModules: [
+    '@nuxtjs/svg',
+    '@nuxtjs/router-extras',
+    '@nuxt/typescript-build',
+  ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
+    '@nuxtjs/dotenv',
     'nuxt-lazy-load',
     'nuxt-breakpoints',
   ],
@@ -61,14 +66,22 @@ export default {
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {},
+  build: {
+    extend(config, { isDev, isClient }) {
+      config.node = {
+        fs: 'empty',
+      }
+
+      // ....
+    },
+  },
 
   env: {
-    baseUrl:
-      process.env.NODE_ENV !== 'production' ? 'http://localhost:8000' : '',
-    baseApiUrl: '/api/v1',
+    mnemonic: process.env.NUXT_PUBLIC_EVM_MNEMONIC,
+    privateKey: process.env.NUXT_PUBLIC_EVM_PRIVATE_KEY,
+    isTestnet: process.env.NUXT_PUBLIC_ENVIRONMENT,
   },
   publicRuntimeConfig: {
-    loadingColor: '#009ca7',
+    loadingColor: '#4ef09d',
   },
 }

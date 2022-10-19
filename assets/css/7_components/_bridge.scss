@@ -2,7 +2,10 @@
   border-radius: 16px;
   padding: 25px;
   background-color: $palette-gainsboro;
-  width: 445px;
+  width: 500px;
+  @include __element(network) {
+    height: 45px;
+  }
   @include __element(converter-icon) {
     position: relative;
     bottom: 8px;
@@ -10,11 +13,19 @@
   @include __element(currency-input) {
     margin-right: 8px;
   }
+  @include __element(currency-option) {
+    width: 100px;
+  }
   @include __element(currency-max) {
     position: absolute;
     right: 15px;
     z-index: 10;
     background-color: transparent !important;
     padding: 0;
+  }
+  @include __element(details) {
+    background-color: $palette-white;
+    border-radius: 8px;
+    padding: 8px 10px;
   }
 }
