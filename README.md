@@ -9,19 +9,21 @@ Users only need to select the chain on which their asset is located and enter th
 Users only need to select the chain on which their asset is located and enter the amount. Then we will prepare them with the different ways of acquiring money on various chains with their details, and the users can easily select their desired option with a few clicks.
 
 # Build Instructions
-# install dependencies
-npm install or yarn
 
-# 1st terminal: launch local cross-chain development
-npm run local-dev:start  or yarn local-dev:start
+##### Install dependencies
+``` npm install or yarn ```
 
-# compile contracts with hardhat
-npm run contracts:build or yarn contracts:build
+##### launch local cross-chain development
+``` npm run local-dev:start or  yarn local-dev:start ```
 
-# 2nd terminal: deploy contracts
-npm run contracts:deploy or yarn contracts:deploy
-# start the ui
-npm run dev or yarn dev
+##### Compile contracts with hardhat
+``` npm run contracts:build or yarn contracts:build ```
+
+##### deploy contracts
+``` npm run contracts:deploy or yarn contracts:deploy ```
+
+##### Launch the project
+``` npm run dev or yarn dev ```
 
 
 ## Roadmap

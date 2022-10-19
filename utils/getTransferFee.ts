@@ -23,6 +23,7 @@ export const getTransferFee = async (
       denom,
       ethers.utils.parseUnits(amount, 6).toNumber()
     )
-    return +ethers.utils.formatUnits(feeResponse.fee.amount, 6)
+    let feeAmount = feeResponse.fee?.amount as any
+    return +ethers.utils.formatUnits(feeAmount, 6)
   }
 }
