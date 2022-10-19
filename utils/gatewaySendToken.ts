@@ -115,8 +115,8 @@ export async function gatewaySendToken(
       'aUSDC',
       ethers.utils.parseUnits(amount, 6),
       {
-        gasLimit: 750000,
         gasPrice: gasPrice,
+        gasLimit: 750000,
       }
     )
     .then((tx: any) => tx.wait())

@@ -91,7 +91,5 @@ sw.*
 *.swp
 
 # contract files
-artifacts
-cache
 
 tsconfig.tsbuildinfo

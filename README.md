@@ -33,10 +33,10 @@ Users only need to select the chain on which their asset is located and enter th
 Our roadmap consists of four main steps, which we will discuss below:
 ### Version 1.0 - October 19, 2022
 On October 19, the initial version of the web application will be presented, where the users can efficiently perform the bridge token process of their choice by connecting their wallet in a few clicks.
-- Ethereum, Avalanche, etc., blockchains are supported.
+- Fantom, Avalanche, etc., blockchains are supported.
 - Metamask wallet is supported.
 ### Version 1.1 - End of November 2022
-- Supports more networks, including Polygon, Moonbeam, and Fantom.
+- Supports more networks, including Polygon, Moonbeam, and Ethereum.
 - Support Kepler and Coinbase wallets
 - Improved user interface
 - Using flipside data to show the platform's performance by using queries on the transactions made on the application.
