@@ -8,7 +8,7 @@ Users only need to select the chain on which their asset is located and enter th
 ## Goals
 Users only need to select the chain on which their asset is located and enter the amount. Then we will prepare them with the different ways of acquiring money on various chains with their details, and the users can easily select their desired option with a few clicks.
 
-# Build Instructions
+## Build Instructions
 
 #### Set up deployer key
 ``` cp .env.example .env ```

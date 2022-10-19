@@ -18,7 +18,9 @@ const polygonChain = chains.find((chain: any) => chain.name === 'Polygon')
 
 const fantomChain = chains.find((chain: any) => chain.name === 'Fantom')
 
-const ethereumChain = chains.find((chain: any) => chain.name === 'Ethereum')
+const ethereumChain = chains.find(
+  (chain: any) => chain.name === 'Ethereum' || chain.name === 'ethereum-2'
+)
 
 // deploy script
 async function main() {
