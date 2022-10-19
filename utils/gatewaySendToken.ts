@@ -91,8 +91,8 @@ export async function gatewaySendToken(
 
   const destBalance = await destERC20.balanceOf(recipientAddress)
   const transferFee: number = await getTransferFee(
-    toNetwork.toString().toLowerCase(),
-    fromNetwork.toString().toLowerCase(),
+    toNetwork.toString()?.toLowerCase(),
+    fromNetwork.toString()?.toLowerCase(),
     'aUSDC',
     amount
   )

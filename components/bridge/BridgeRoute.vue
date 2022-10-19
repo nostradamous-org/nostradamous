@@ -71,7 +71,7 @@ export default {
       this.wallet = wallet
     },
     networkValue(value, flow) {
-      if (flow.toLowerCase() === 'from') {
+      if (flow?.toLowerCase() === 'from') {
         this.fromNetwork = value
       } else {
         this.toNetwork = value
