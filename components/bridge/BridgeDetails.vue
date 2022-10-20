@@ -1,7 +1,13 @@
 <template>
   <div class="column-flex bottom-margin bridge__details">
-    <span><b>Transfer Fee:</b> {{ fee }}</span>
-    <span><b>Transactions Hash:</b> {{ txHash }}</span>
+    <span v-if="fee"><b>Transfer Fee:</b> {{ fee }}</span>
+    <span v-if="txHash"><b>Transactions Hash:</b> {{ txHash }}</span>
+    <span class='flex'
+      ><b>Status:</b>
+      <span :class="`bridge__transaction-status--${status}`">&nbsp;{{
+        status
+      }}</span></span
+    >
   </div>
 </template>
 
@@ -15,6 +21,11 @@ export default {
     txHash: {
       type: String,
       required: true,
+    },
+  },
+  computed: {
+    status() {
+      return this.fee ? 'success' : 'failed'
     },
   },
 }

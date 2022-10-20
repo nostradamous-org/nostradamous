@@ -32,7 +32,7 @@
       @amount-value="amountValue"
     ></bridge-route-currency>
     <bridge-details
-      v-if="transferFee && txHash"
+      v-if="transferFee || txHash"
       :fee="transferFee"
       :tx-hash="txHash"
     ></bridge-details>
@@ -100,6 +100,10 @@ export default {
         this.$toast.error('Please enter send amount')
         return
       }
+      if (this.walletValue.networkId !== this.fromNetwork.id) {
+        this.$toast.error('Wrong network selected')
+        return
+      }
       this.transferFee = ''
       this.txHash = ''
       this.isLoading = true
@@ -119,8 +123,14 @@ export default {
           this.isLoading = false
         })
         .catch((e) => {
-          if (e.toString().includes('insufficient funds for gas')) {
+          console.log(e)
+          let error = e.toString()
+          if (error.includes('insufficient funds for gas')) {
             this.$toast.error('Insufficient funds for gas')
+          } else if (error.includes('transactionHash')) {
+            let start = error.search('transactionHash=')
+            let end = error.search(', transaction=')
+            this.txHash = error.slice(start + 17, end - 1)
           } else {
             this.$toast.error('Something Wrong happened')
           }

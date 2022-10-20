@@ -28,4 +28,12 @@
     border-radius: 8px;
     padding: 8px 10px;
   }
+  @include __element(transaction-status) {
+    @include --modifier(success) {
+      color: green;
+    }
+    @include --modifier(failed) {
+      color: red;
+    }
+  }
 }

@@ -44,14 +44,14 @@ function chainSelect(fromNetwork: String, toNetwork: String) {
   const toConnectedWallet = wallet.connect(toProvider)
 
   const srcGatewayContract = new Contract(
-    toChain.gateway,
-    AxelarGatewayContract.abi,
-    toConnectedWallet
-  )
-  const destGatewayContract = new Contract(
     fromChain.gateway,
     AxelarGatewayContract.abi,
     fromConnectedWallet
+  )
+  const destGatewayContract = new Contract(
+    toChain.gateway,
+    AxelarGatewayContract.abi,
+    toConnectedWallet
   )
 
   return {
@@ -64,17 +64,6 @@ function chainSelect(fromNetwork: String, toNetwork: String) {
   }
 }
 
-export const axelarGasFee = async (fromChain: any) => {
-  const api = new AxelarQueryAPI({ environment: Environment.TESTNET })
-  const gasFee = await api.estimateGasFee(
-    EvmChain.FANTOM,
-    EvmChain.AVALANCHE,
-    GasToken.AVAX,
-    70000
-  )
-  return gasFee
-}
-
 export async function gatewaySendToken(
   fromNetwork: String,
   toNetwork: String,
@@ -85,7 +74,6 @@ export async function gatewaySendToken(
   let contracts = chainSelect(fromNetwork, toNetwork)
   let provider = new providers.Web3Provider((window as any).ethereum)
   const gasPrice = await provider.getGasPrice()
-  const gasFee = await axelarGasFee(toNetwork)
   // Get token address from the gateway contract for the src chain
   const srcTokenAddress = await contracts.srcGatewayContract.tokenAddresses(
     'aUSDC'
@@ -93,7 +81,7 @@ export async function gatewaySendToken(
   const srcErc20 = new Contract(
     srcTokenAddress,
     IERC20.abi,
-    contracts.toConnectedWallet
+    contracts.fromConnectedWallet
   )
 
   // Get token address from the gateway contract for the destination chain
@@ -103,13 +91,13 @@ export async function gatewaySendToken(
   const destERC20 = new Contract(
     destinationTokenAddress,
     IERC20.abi,
-    contracts.fromConnectedWallet
+    contracts.toConnectedWallet
   )
 
   const destBalance = await destERC20.balanceOf(recipientAddress)
   const transferFee: number = await getTransferFee(
-    toNetwork.toString()?.toLowerCase(),
     fromNetwork.toString()?.toLowerCase(),
+    toNetwork.toString()?.toLowerCase(),
     'aUSDC',
     amount
   )
@@ -127,13 +115,13 @@ export async function gatewaySendToken(
   // Send the token
   const txHash: string = await contracts.srcGatewayContract
     .sendToken(
-      fromNetwork.toString(),
+      toNetwork.toString(),
       recipientAddress,
       'aUSDC',
       ethers.utils.parseUnits(amount, 6),
       {
+        gasLimit: 750000,
         gasPrice: gasPrice,
-        gasLimit: 10000000,
       }
     )
     .then((tx: any) => tx.wait())

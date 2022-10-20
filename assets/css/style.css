@@ -1902,4 +1902,10 @@ input:-webkit-autofill {
   background-color: #ffffff;
   border-radius: 8px;
   padding: 8px 10px;
+}
+.bridge__transaction-status--success {
+  color: green;
+}
+.bridge__transaction-status--failed {
+  color: red;
 }/*# sourceMappingURL=style.css.map */
