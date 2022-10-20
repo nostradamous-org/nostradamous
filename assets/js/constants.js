@@ -90,4 +90,32 @@ const stableCoins = [
   },
 ]
 
-export { chainsId, stableCoins }
+const tokensContract = [
+  {
+    token: 'USDC',
+    contract: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+  },
+]
+
+const contractABI = [
+  {
+    constant: true,
+    inputs: [
+      {
+        name: '_owner',
+        type: 'address',
+      },
+    ],
+    name: 'balanceOf',
+    outputs: [
+      {
+        name: 'balance',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    type: 'function',
+  },
+]
+
+export { chainsId, stableCoins, tokensContract, contractABI }

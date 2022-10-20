@@ -1,6 +1,11 @@
-import { Contract, ethers, getDefaultProvider, providers } from 'ethers'
 import {
-  AxelarAssetTransfer,
+  Contract,
+  ethers,
+  getDefaultProvider,
+  providers,
+  BigNumber,
+} from 'ethers'
+import {
   AxelarQueryAPI,
   Environment,
   EvmChain,
@@ -59,6 +64,17 @@ function chainSelect(fromNetwork: String, toNetwork: String) {
   }
 }
 
+export const axelarGasFee = async (fromChain: any) => {
+  const api = new AxelarQueryAPI({ environment: Environment.TESTNET })
+  const gasFee = await api.estimateGasFee(
+    EvmChain.FANTOM,
+    EvmChain.AVALANCHE,
+    GasToken.AVAX,
+    70000
+  )
+  return gasFee
+}
+
 export async function gatewaySendToken(
   fromNetwork: String,
   toNetwork: String,
@@ -69,6 +85,7 @@ export async function gatewaySendToken(
   let contracts = chainSelect(fromNetwork, toNetwork)
   let provider = new providers.Web3Provider((window as any).ethereum)
   const gasPrice = await provider.getGasPrice()
+  const gasFee = await axelarGasFee(toNetwork)
   // Get token address from the gateway contract for the src chain
   const srcTokenAddress = await contracts.srcGatewayContract.tokenAddresses(
     'aUSDC'
@@ -102,7 +119,7 @@ export async function gatewaySendToken(
       contracts.srcGatewayContract.address,
       ethers.utils.parseUnits(amount, 6),
       {
-        gasLimit: 100000,
+        gasLimit: 1000000,
         gasPrice: gasPrice,
       }
     )
@@ -116,7 +133,7 @@ export async function gatewaySendToken(
       ethers.utils.parseUnits(amount, 6),
       {
         gasPrice: gasPrice,
-        gasLimit: 750000,
+        gasLimit: 10000000,
       }
     )
     .then((tx: any) => tx.wait())

@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import { chainsId } from '~/assets/js/constants'
 import { isObjectEmpty } from '~/assets/js/utils'
 export default {
@@ -42,6 +43,9 @@ export default {
   watch: {
     option: {
       handler() {
+        if (this.flow.toLowerCase() === 'from') {
+          this.setFromNetwork(this.option)
+        }
         this.$emit('network-value', this.option, this.flow)
       },
       deep: true,
@@ -63,6 +67,9 @@ export default {
       },
       deep: true,
     },
+  },
+  methods: {
+    ...mapActions('general', ['setFromNetwork']),
   },
 }
 </script>

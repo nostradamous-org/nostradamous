@@ -118,13 +118,13 @@ export default {
         .finally(() => {
           this.isLoading = false
         })
-        // .catch((e) => {
-        //   // if (e.toString().includes('insufficient funds for gas')) {
-        //   //   this.$toast.error('Insufficient funds for gas')
-        //   // } else {
-        //   //   this.$toast.error('Something Wrong happened')
-        //   // }
-        // })
+        .catch((e) => {
+          if (e.toString().includes('insufficient funds for gas')) {
+            this.$toast.error('Insufficient funds for gas')
+          } else {
+            this.$toast.error('Something Wrong happened')
+          }
+        })
     },
   },
 }
