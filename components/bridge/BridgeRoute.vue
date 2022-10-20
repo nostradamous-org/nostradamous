@@ -123,7 +123,6 @@ export default {
           this.isLoading = false
         })
         .catch((e) => {
-          console.log(e)
           let error = e.toString()
           if (error.includes('insufficient funds for gas')) {
             this.$toast.error('Insufficient funds for gas')
