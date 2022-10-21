@@ -55,7 +55,7 @@ On October 19, the initial version of the web application will be presented, whe
 - Global introduction of the program and launch on Mainnet
 
 ## Demo Video
-🔗 For a demo of Nostradamus's functionalities watch [ this short video.](https://youtu.be/LjpeoNAOQBY)
+🔗 For a demo of Nostradamus's functionalities watch [this short video](https://youtu.be/LjpeoNAOQBY).
 
 
 
