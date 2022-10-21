@@ -3,11 +3,18 @@ import {
   ethers,
   getDefaultProvider,
   providers,
-  BigNumber,
 } from 'ethers'
+
+import {
+  AxelarQueryAPI,
+  Environment,
+  EvmChain,
+  GasToken,
+} from '@axelar-network/axelarjs-sdk'
 
 import AxelarGatewayContract from '../abi/IAxelarGateway.sol/IAxelarGateway.json'
 import MessageSenderContract from '../artifacts/contracts/MessageSender.sol/MessageSender.json'
+import MessageReceiverContract from '../artifacts/contracts/MessageReceiver.sol/MessageReceiver.json'
 import IERC20 from '../abi/IERC20.sol/IERC20.json'
 import { isTestnet, wallet } from '../config/constants'
 import { sleep } from './sleep'
@@ -21,7 +28,6 @@ function chainSelect(fromNetwork: String, toNetwork: String) {
     (chain: any) => chain.name == fromNetwork
   ) as any
   const toChain = chains.find((chain: any) => chain.name == toNetwork) as any
-
   if (!fromChain || !toChain) {
     process.exit(0)
   }
@@ -49,6 +55,7 @@ function chainSelect(fromNetwork: String, toNetwork: String) {
   )
 
   return {
+    toChain,
     fromChain,
     srcGatewayContract,
     destGatewayContract,
@@ -73,28 +80,33 @@ export async function gatewaySendToken(
   let contracts = chainSelect(fromNetwork, toNetwork)
   let provider = new providers.Web3Provider((window as any).ethereum)
   const signer = provider.getSigner()
-  const gasPrice = await provider.getGasPrice()
+
   const srcERC20 = new Contract(srcTokenAddress, IERC20.abi, signer)
 
   const destERC20 = new Contract(destTokenAddress, IERC20.abi, provider)
 
   const destBalance = await destERC20.balanceOf(recipientAddress)
 
-  const sourceContract = new Contract(
-    contracts.fromChain.gateway,
-    AxelarGatewayContract.abi,
-    signer
+  const api = new AxelarQueryAPI({ environment: Environment.TESTNET })
+
+  const gasFee = await api.estimateGasFee(
+    EvmChain.AVALANCHE,
+    EvmChain.FANTOM,
+    GasToken.AVAX,
+    700000,
+    2
   )
 
   // Approve the token for the amount to be sent
   await srcERC20
-    .approve(sourceContract.address, ethers.utils.parseUnits(amount, 6), {
-      gasLimit: 1000000,
-      gasPrice: gasPrice,
-    })
+    .approve(
+      contracts.srcGatewayContract.address,
+      ethers.utils.parseUnits(amount, 6)
+    )
     .then((tx: any) => tx.wait())
   // Send the token
-  const txHash: string = await sourceContract
+
+  const txHash: string = await contracts.srcGatewayContract
     .sendToken(
       toNetwork.toString(),
       recipientAddress,
@@ -102,7 +114,6 @@ export async function gatewaySendToken(
       ethers.utils.parseUnits(amount, 6),
       {
         gasLimit: 750000,
-        gasPrice: gasPrice,
       }
     )
     .then((tx: any) => tx.wait())

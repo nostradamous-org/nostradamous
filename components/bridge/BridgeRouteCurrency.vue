@@ -31,10 +31,11 @@
         input-main-class="bridge__currency-option"
         :options="currencies"
         :active-option.sync="option"
+        :disabled="flow === 'send' ? false : true"
       ></base-select-option>
     </div>
     <span v-if="flow === 'send'" class="fs1 color-nero bold-400"
-      >&nbsp; &nbsp;Balance: {{ balanceValue.value }}
+      >&nbsp; &nbsp;Available Balance: {{ balanceValue.value }}
       {{ balanceValue.symbol }}</span
     >
     <span v-if="error" class="color-red bold-500">* {{ error }}</span>
