@@ -54,8 +54,8 @@ On October 19, the initial version of the web application will be presented, whe
 - Supporting Android wallets including Trustwallet
 - Global introduction of the program and launch on Mainnet
 
-## Demo functionality
-🔗 [For a demo of Nostradamus's functionalities watch this short video.](https://youtu.be/LjpeoNAOQBY)
+## Demo Video
+🔗 For a demo of Nostradamus's functionalities watch [ this short video.](https://youtu.be/LjpeoNAOQBY)
 
 
 
