@@ -8,6 +8,12 @@
     input-parent-class="center-items full-width relative"
     v-model="wallet"
   >
+    <template v-slot:error>
+      <span
+        >You can use different recipient address than your connected wallet
+        address.</span
+      >
+    </template>
   </base-input>
 </template>
 
@@ -25,9 +31,7 @@ export default {
   watch: {
     walletValue: {
       handler() {
-        if (this.walletValue.address) {
-          this.wallet = this.walletValue.address
-        }
+        this.wallet = this.walletValue.address
       },
       deep: true,
     },

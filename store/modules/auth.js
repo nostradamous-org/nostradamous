@@ -4,8 +4,6 @@ export const state = () => ({
   wallet: {
     networkId: '',
     address: '',
-    balance: '',
-    currency: '',
   },
 })
 

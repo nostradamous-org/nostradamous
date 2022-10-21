@@ -1,7 +1,12 @@
 <template>
   <div class="bridge column-flex">
     <base-loading :is-loading="isLoading" isFullPage></base-loading>
-    <span class="fl2 bold-500 bottom-margin">Bridge</span>
+    <div class="column-flex bottom-margin">
+      <span class="fl2 bold-500">Bridge</span>
+      <span class="fl1 bold-400"
+        >You can bridge only on <b>testnet</b> for now.</span
+      >
+    </div>
     <div class="flex flex-end-align bottom-margin">
       <bridge-route-network
         flow="From"
@@ -24,16 +29,21 @@
     <bridge-wallet @wallet-address="walletAddress"></bridge-wallet>
     <bridge-route-currency
       flow="send"
+      :fee="transferFee"
       @amount-value="amountValue"
+      @token-details="tokenDetails"
     ></bridge-route-currency>
     <bridge-route-currency
       flow="receive"
       :receive-amount="receiveAmountCalculator"
       @amount-value="amountValue"
+      @token-details="tokenDetails"
     ></bridge-route-currency>
     <bridge-details
-      v-if="transferFee || txHash"
-      :fee="transferFee"
+      :amount="sendAmount"
+      :to-network="toNetwork.name"
+      :from-network="fromNetwork.name"
+      :fee.sync="transferFee"
       :tx-hash="txHash"
     ></bridge-details>
     <button class="button--full bold-500" @click="bridge">Bridge</button>
@@ -42,19 +52,29 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { gatewaySendToken } from '../../utils'
+import { gatewaySendToken } from '~/utils'
 
 export default {
   data() {
     return {
-      fromNetwork: {},
-      toNetwork: {},
+      fromNetwork: {
+        name: '',
+      },
+      toNetwork: {
+        name: '',
+      },
       sendAmount: '',
-      receiveAmount: '',
       isLoading: false,
       wallet: '',
-      transferFee: '',
+      transferFee: 0,
       txHash: '',
+      tokenAddress: {},
+      requiredMessage: {
+        wallet: 'Please, Connet Your Wallet',
+        recipient: 'Please, Enter Recipient Wallet Address',
+        value: 'Please, Enter Send Amount',
+        network: 'Wrong Network Selected',
+      },
     }
   },
   computed: {
@@ -77,11 +97,18 @@ export default {
         this.toNetwork = value
       }
     },
-    amountValue(value, flow) {
+    amountValue(value) {
+      this.sendAmount = value
+    },
+    tokenDetails(flow, details) {
+      let contract = details.contracts.find(
+        (x) => x.name === this.fromNetwork.name
+      )
       if (flow === 'send') {
-        this.sendAmount = value
+        this.tokenAddress.srcToken = details.token
+        this.tokenAddress.srcTokenAddress = contract.address
       } else {
-        this.receiveAmount = value
+        this.tokenAddress.destTokenAddress = contract.address
       }
     },
     changeNetwork() {
@@ -89,25 +116,28 @@ export default {
       this.fromNetwork = this.toNetwork
       this.toNetwork = temp
     },
-    async bridge() {
-      if (!this.wallet) {
-        this.$toast.error(
-          'Please connect your wallet or enter recipient wallet address'
-        )
+    bridge() {
+      let isWrongNetwork = this.walletValue.networkId !== this.fromNetwork.id
+      let key = !this.walletValue.address
+        ? 'wallet'
+        : isWrongNetwork
+        ? 'network'
+        : !this.wallet
+        ? 'recipient'
+        : !this.sendAmount
+        ? 'value'
+        : ''
+      if (key) {
+        this.$toast.error(this.requiredMessage[key])
         return
       }
-      if (!this.sendAmount) {
-        this.$toast.error('Please enter send amount')
-        return
-      }
-      if (this.walletValue.networkId !== this.fromNetwork.id) {
-        this.$toast.error('Wrong network selected')
-        return
-      }
-      this.transferFee = ''
+      this.transferFee = 0
       this.txHash = ''
       this.isLoading = true
 
+      this.sendTokenMethod()
+    },
+    async sendTokenMethod() {
       const cb = (data) => {
         this.transferFee = data.transferFee
         this.txHash = data.txHash
@@ -117,12 +147,16 @@ export default {
         this.toNetwork.network,
         this.sendAmount,
         this.wallet,
+        this.tokenAddress.srcToken,
+        this.tokenAddress.srcTokenAddress,
+        this.tokenAddress.destTokenAddress,
         cb
       )
         .finally(() => {
           this.isLoading = false
         })
         .catch((e) => {
+          console.log(e)
           let error = e.toString()
           if (error.includes('insufficient funds for gas')) {
             this.$toast.error('Insufficient funds for gas')

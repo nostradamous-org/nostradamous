@@ -75,47 +75,33 @@ const chainsId = [
   // },
 ]
 
-const stableCoins = [
+const tokens = [
   {
     name: 'USDC',
     token: 'USDC',
     id: 'USDC',
+    main: false,
     icon: 'tokens/usdc',
+    contracts: [
+      {
+        name: 'Avalanche',
+        address: '0x5425890298aed601595a70AB815c96711a31Bc65',
+      },
+    ],
   },
   {
     name: 'aUSDC',
     token: 'aUSDC',
     id: 'aUSDC',
+    main: false,
     icon: 'tokens/usdc',
-  },
-]
-
-const tokensContract = [
-  {
-    token: 'USDC',
-    contract: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-  },
-]
-
-const contractABI = [
-  {
-    constant: true,
-    inputs: [
+    contracts: [
       {
-        name: '_owner',
-        type: 'address',
+        name: 'Avalanche',
+        address: '0x57F1c63497AEe0bE305B8852b354CEc793da43bB',
       },
     ],
-    name: 'balanceOf',
-    outputs: [
-      {
-        name: 'balance',
-        type: 'uint256',
-      },
-    ],
-    payable: false,
-    type: 'function',
   },
 ]
 
-export { chainsId, stableCoins, tokensContract, contractABI }
+export { chainsId, tokens }

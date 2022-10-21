@@ -13,13 +13,15 @@
         <span class="fl1">&nbsp; &nbsp; Home</span>
       </nuxt-link>
     </div>
-    <span v-if="address || error" class="button">{{
-      error ? error : address
-    }}</span>
-    <button v-else class="button" @click="connectWallet(true)">
-      <base-icon color="nero" size="32" icon-path="general/wallet"></base-icon
-      >&nbsp; &nbsp;Connect Wallet
-    </button>
+    <div class="flex">
+      <span v-if="address || error" class="button right-margin">{{
+        error ? error : address
+      }}</span>
+      <button class="button" @click="connectWallet(true)">
+        <base-icon color="nero" size="32" icon-path="general/wallet"></base-icon
+        >&nbsp; &nbsp;{{ address ? 'Disconnect Wallet' : 'Connect Wallet' }}
+      </button>
+    </div>
   </div>
 </template>
 
@@ -46,7 +48,6 @@ export default {
     },
   },
   mounted() {
-    ethereum.on('networkChanged', () => this.connectWallet())
     ethereum.on('accountsChanged', () => this.connectWallet())
     ethereum.on('chainChanged', () => this.connectWallet())
   },
@@ -54,10 +55,20 @@ export default {
     ...mapActions('auth', ['setWallet']),
     async connectWallet(click = false) {
       this.error = ''
+      let wallet = {
+        networkId: '',
+        address: '',
+      }
       if (typeof window.ethereum !== 'undefined') {
         try {
           if (click) {
-            await window.ethereum.send('eth_requestAccounts')
+            if (this.address) {
+              this.setWallet(wallet)
+              this.address = ''
+              return
+            } else {
+              await window.ethereum.send('eth_requestAccounts')
+            }
           }
           const instance = new Web3(window.ethereum)
 
@@ -70,13 +81,10 @@ export default {
             return
           }
           this.address = await instance.eth.getCoinbase()
-          const balance = await instance.eth.getBalance(this.address)
 
-          let wallet = {
+          wallet = {
             networkId: networkId,
             address: this.address,
-            balance: instance.utils.fromWei(balance, 'ether'),
-            currency: chainsId.find((c) => c.id == networkId).token,
           }
 
           this.setWallet(wallet)

@@ -1893,7 +1893,7 @@ input:-webkit-autofill {
 }
 .bridge__currency-max {
   position: absolute;
-  right: 15px;
+  right: 30px;
   z-index: 10;
   background-color: transparent !important;
   padding: 0;

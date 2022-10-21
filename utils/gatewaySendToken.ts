@@ -5,18 +5,12 @@ import {
   providers,
   BigNumber,
 } from 'ethers'
-import {
-  AxelarQueryAPI,
-  Environment,
-  EvmChain,
-  GasToken,
-} from '@axelar-network/axelarjs-sdk'
 
 import AxelarGatewayContract from '../abi/IAxelarGateway.sol/IAxelarGateway.json'
+import MessageSenderContract from '../artifacts/contracts/MessageSender.sol/MessageSender.json'
 import IERC20 from '../abi/IERC20.sol/IERC20.json'
 import { isTestnet, wallet } from '../config/constants'
 import { sleep } from './sleep'
-import { getTransferFee } from './getTransferFee'
 
 function chainSelect(fromNetwork: String, toNetwork: String) {
   let chains = isTestnet
@@ -55,6 +49,7 @@ function chainSelect(fromNetwork: String, toNetwork: String) {
   )
 
   return {
+    fromChain,
     srcGatewayContract,
     destGatewayContract,
     fromConnectedWallet,
@@ -69,55 +64,41 @@ export async function gatewaySendToken(
   toNetwork: String,
   amount: string,
   recipientAddress: string,
-  onSent: (data: { txHash: string; transferFee: number }) => void
+  srcToken: string,
+  srcTokenAddress: string,
+  destTokenAddress: string,
+  // onSent: (data: { txHash: string; transferFee: number }) => void
+  onSent: (data: { txHash: string }) => void
 ) {
   let contracts = chainSelect(fromNetwork, toNetwork)
   let provider = new providers.Web3Provider((window as any).ethereum)
+  const signer = provider.getSigner()
   const gasPrice = await provider.getGasPrice()
-  // Get token address from the gateway contract for the src chain
-  const srcTokenAddress = await contracts.srcGatewayContract.tokenAddresses(
-    'aUSDC'
-  )
-  const srcErc20 = new Contract(
-    srcTokenAddress,
-    IERC20.abi,
-    contracts.fromConnectedWallet
-  )
+  const srcERC20 = new Contract(srcTokenAddress, IERC20.abi, signer)
 
-  // Get token address from the gateway contract for the destination chain
-  const destinationTokenAddress =
-    await contracts.destGatewayContract.tokenAddresses('aUSDC')
-
-  const destERC20 = new Contract(
-    destinationTokenAddress,
-    IERC20.abi,
-    contracts.toConnectedWallet
-  )
+  const destERC20 = new Contract(destTokenAddress, IERC20.abi, provider)
 
   const destBalance = await destERC20.balanceOf(recipientAddress)
-  const transferFee: number = await getTransferFee(
-    fromNetwork.toString()?.toLowerCase(),
-    toNetwork.toString()?.toLowerCase(),
-    'aUSDC',
-    amount
+
+  const sourceContract = new Contract(
+    contracts.fromChain.gateway,
+    AxelarGatewayContract.abi,
+    signer
   )
+
   // Approve the token for the amount to be sent
-  await srcErc20
-    .approve(
-      contracts.srcGatewayContract.address,
-      ethers.utils.parseUnits(amount, 6),
-      {
-        gasLimit: 1000000,
-        gasPrice: gasPrice,
-      }
-    )
+  await srcERC20
+    .approve(sourceContract.address, ethers.utils.parseUnits(amount, 6), {
+      gasLimit: 1000000,
+      gasPrice: gasPrice,
+    })
     .then((tx: any) => tx.wait())
   // Send the token
-  const txHash: string = await contracts.srcGatewayContract
+  const txHash: string = await sourceContract
     .sendToken(
       toNetwork.toString(),
       recipientAddress,
-      'aUSDC',
+      srcToken,
       ethers.utils.parseUnits(amount, 6),
       {
         gasLimit: 750000,
@@ -127,8 +108,7 @@ export async function gatewaySendToken(
     .then((tx: any) => tx.wait())
     .then((receipt: any) => receipt.transactionHash)
 
-  console.log({ txHash })
-  onSent({ txHash, transferFee })
+  onSent({ txHash })
 
   // Wait destination contract to execute the transaction.
   return new Promise(async (resolve, reject) => {
