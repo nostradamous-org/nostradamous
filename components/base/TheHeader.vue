@@ -66,6 +66,7 @@ export default {
             if (this.address) {
               this.setWallet(wallet)
               this.address = ''
+              this.walletConnected = false
               return
             } else {
               await window.ethereum.send('eth_requestAccounts')
