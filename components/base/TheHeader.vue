@@ -14,7 +14,7 @@
       </nuxt-link>
     </div>
     <div class="flex">
-      <span v-if="address || error" class="button right-margin">{{
+      <span v-if="walletConnected" class="button right-margin">{{
         error ? error : address
       }}</span>
       <button class="button" @click="connectWallet(true)">
@@ -34,6 +34,7 @@ export default {
     return {
       address: '',
       error: '',
+      walletConnected: false,
     }
   },
   computed: {
@@ -86,6 +87,7 @@ export default {
             networkId: networkId,
             address: this.address,
           }
+          this.walletConnected = true
 
           this.setWallet(wallet)
         } catch (error) {
