@@ -39,13 +39,14 @@
       @amount-value="amountValue"
       @token-details="tokenDetails"
     ></bridge-route-currency>
-    <bridge-details
+    <bridge-route-details
       :amount="sendAmount"
+      :tx-status="txStatus"
       :to-network="toNetwork.name"
       :from-network="fromNetwork.name"
       :fee.sync="transferFee"
       :tx-hash="txHash"
-    ></bridge-details>
+    ></bridge-route-details>
     <button class="button--full bold-500" @click="bridge">Bridge</button>
   </div>
 </template>
@@ -68,7 +69,9 @@ export default {
       wallet: '',
       transferFee: 0,
       txHash: '',
+      txStatus: '',
       tokenAddress: {},
+      balanceError: '',
       requiredMessage: {
         wallet: 'Please, Connet Your Wallet',
         recipient: 'Please, Enter Recipient Wallet Address',
@@ -91,14 +94,17 @@ export default {
       this.wallet = wallet
     },
     networkValue(value, flow) {
+      this.transferFee = 0
       if (flow?.toLowerCase() === 'from') {
         this.fromNetwork = value
       } else {
         this.toNetwork = value
       }
     },
-    amountValue(value) {
+    amountValue(value, error) {
       this.sendAmount = value
+      this.transferFee = 0
+      this.balanceError = error
     },
     tokenDetails(flow, details) {
       let contract = details.contracts.find(
@@ -117,6 +123,9 @@ export default {
       this.toNetwork = temp
     },
     bridge() {
+      if (this.balanceError) {
+        return
+      }
       let isWrongNetwork = this.walletValue.networkId !== this.fromNetwork.id
       let key = !this.walletValue.address
         ? 'wallet'
@@ -131,8 +140,8 @@ export default {
         this.$toast.error(this.requiredMessage[key])
         return
       }
-      this.transferFee = 0
       this.txHash = ''
+      this.txStatus = ''
       this.isLoading = true
 
       this.sendTokenMethod()
@@ -158,6 +167,9 @@ export default {
         .catch((e) => {
           console.log(e)
           let error = e.toString()
+          if (error.includes('failed')) {
+            this.txStatus = 'failed'
+          }
           if (error.includes('insufficient funds for gas')) {
             this.$toast.error('Insufficient funds for gas')
           } else if (error.includes('transactionHash')) {

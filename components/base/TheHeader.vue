@@ -19,7 +19,9 @@
       }}</span>
       <button class="button" @click="connectWallet(true)">
         <base-icon color="nero" size="32" icon-path="general/wallet"></base-icon
-        >&nbsp; &nbsp;{{ address ? 'Disconnect Wallet' : 'Connect Wallet' }}
+        >&nbsp; &nbsp;{{
+          walletConnected ? 'Disconnect Wallet' : 'Connect Wallet'
+        }}
       </button>
     </div>
   </div>
@@ -51,11 +53,11 @@ export default {
   mounted() {
     ethereum.on('accountsChanged', () => this.connectWallet())
     ethereum.on('chainChanged', () => this.connectWallet())
+    ethereum.on('networkChanged', () => this.connectWallet())
   },
   methods: {
     ...mapActions('auth', ['setWallet']),
     async connectWallet(click = false) {
-      this.error = ''
       let wallet = {
         networkId: '',
         address: '',
@@ -63,7 +65,7 @@ export default {
       if (typeof window.ethereum !== 'undefined') {
         try {
           if (click) {
-            if (this.address) {
+            if (this.walletConnected) {
               this.setWallet(wallet)
               this.address = ''
               this.walletConnected = false
@@ -74,23 +76,27 @@ export default {
           }
           const instance = new Web3(window.ethereum)
 
-          const networkId = await instance.eth.net.getId()
-          if (
-            !chainsId.find((c) => c.id == networkId) ||
-            networkId !== this.fromNetworkValue.id
-          ) {
-            this.error = 'Wrong Network'
-            return
-          }
           this.address = await instance.eth.getCoinbase()
+          if (this.address) {
+            this.walletConnected = true
+            const networkId = await instance.eth.net.getId()
 
-          wallet = {
-            networkId: networkId,
-            address: this.address,
+            if (
+              !chainsId.find((c) => c.id == networkId) ||
+              networkId !== this.fromNetworkValue.id
+            ) {
+              this.error = 'Wrong Network'
+            } else {
+              this.error = ''
+            }
+
+            wallet = {
+              networkId: networkId,
+              address: this.address,
+            }
+
+            this.setWallet(wallet)
           }
-          this.walletConnected = true
-
-          this.setWallet(wallet)
         } catch (error) {
           return
         }

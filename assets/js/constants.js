@@ -87,6 +87,18 @@ const tokens = [
         name: 'Avalanche',
         address: '0x5425890298aed601595a70AB815c96711a31Bc65',
       },
+      {
+        name: 'Fantom',
+        address: '0xdEE65CaD824eD001a03215941FEb7c85D3E0aA94',
+      },
+      {
+        name: 'Polygon',
+        address: '0x234201E48499b104321CB482BeB5A7ae5F3d9627',
+      },
+      {
+        name: 'Moonbase',
+        address: '0x5F18ccF6d4826BD47a73979d1d7Fe7b2a64D6ebD',
+      },
     ],
   },
   {

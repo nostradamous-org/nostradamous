@@ -1,15 +1,12 @@
 <template>
-  <div
-    v-if="fee || txHash"
-    class="column-flex bottom-margin bridge__details relative"
-  >
+  <div class="column-flex top-margin bottom-margin bridge__details relative">
     <base-loading :is-loading="isLoading"></base-loading>
-    <span v-if="fee"><b>Estimated Transfer Fee ~</b> {{ fee }}</span>
+    <span><b>Estimated Transfer Fee ~</b> {{ fee === 0 ? '' : fee }}</span>
     <span v-if="txHash"><b>Transaction Hash:</b> {{ txHash }}</span>
     <span v-if="txHash" class="flex"
       ><b>Status:</b>
-      <span :class="`bridge__transaction-status--${status}`"
-        >&nbsp;{{ status }}</span
+      <span :class="`bridge__transaction-status--${txStatus}`"
+        >&nbsp;{{ txStatus }}</span
       ></span
     >
   </div>
@@ -36,6 +33,10 @@ export default {
       required: true,
     },
     amount: {
+      type: [String, Number],
+      required: true,
+    },
+    txStatus: {
       type: String,
       required: true,
     },
@@ -44,11 +45,6 @@ export default {
     return {
       isLoading: false,
     }
-  },
-  computed: {
-    status() {
-      return this.fee ? 'success' : 'failed'
-    },
   },
   watch: {
     fromNetwork: function () {
@@ -72,7 +68,7 @@ export default {
           this.fromNetwork.toLowerCase(),
           this.toNetwork.toLowerCase(),
           'aUSDC',
-          this.amount
+          this.amount.toString()
         )
         this.$emit('update:fee', fee)
         this.isLoading = false
